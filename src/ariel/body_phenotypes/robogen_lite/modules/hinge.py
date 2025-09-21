@@ -14,10 +14,7 @@ import numpy as np
 import quaternion as qnp
 
 # Local libraries
-from ariel.body_phenotypes.robogen_lite.config import (
-    ModuleFaces,
-    ModuleType,
-)
+from ariel.body_phenotypes.robogen_lite.config import ModuleFaces, ModuleType
 from ariel.body_phenotypes.robogen_lite.modules.module import Module
 
 # Global constants
@@ -45,7 +42,13 @@ class HingeModule(Module):
     module_type: str = ModuleType.HINGE
 
     def __init__(self, index: int) -> None:
-        """Initialize the brick module."""
+        """Initialize the brick module.
+        
+        Parameters
+        ----------
+        index : int
+            The index of the hinge module being instantiated
+        """
         # Set the index of the module
         self.index = index
 
@@ -138,7 +141,7 @@ class HingeModule(Module):
             biasprm=biasprm,
             trntype=trntype,
             target=servo_name,
-            ctrlrange=(-np.pi, -np.pi),  # [-180, 180] degrees
+            ctrlrange=(-np.pi/2, np.pi/2),  # [-90, 90] degrees (range of 180)
         )
 
         # Save model specifications
@@ -156,7 +159,7 @@ class HingeModule(Module):
         Parameters
         ----------
         angle : float
-            The angle in radians to rotate the hinge.
+            The angle in degrees to rotate the hinge.
         """
         # Convert angle to quaternion
         quat = qnp.from_euler_angles([
