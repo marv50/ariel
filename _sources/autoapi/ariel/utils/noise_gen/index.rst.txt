@@ -1,0 +1,120 @@
+:py:mod:`noise_gen`
+===============================
+
+.. py:module:: ariel.utils.noise_gen
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ariel.utils.noise_gen.NoiseGenerator
+   ariel.utils.noise_gen.PerlinNoise
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   ariel.utils.noise_gen.noise
+
+
+.. py:class:: NoiseGenerator
+
+   Bases: :py:obj:`abc.ABC`
+
+   .. autoapi-inheritance-diagram:: ariel.utils.noise_gen.NoiseGenerator
+      :parts: 1
+
+
+   Base interface for 2D noise generators.
+
+   .. method:: as_grid(width, height, \*\*kwargs) -> np.ndarray
+
+      Generate a full HxW noise grid.
+
+   .. method:: at_pixel_position(x, y, \*\*kwargs) -> float
+
+      Sample the noise at a single pixel coordinate (x, y).
+
+
+
+   .. py:method:: as_grid(width: int, height: int, **kwargs) -> numpy.ndarray
+      :abstractmethod:
+
+
+
+   .. py:method:: at_pixel_position(x: int, y: int, **kwargs) -> float
+      :abstractmethod:
+
+
+
+.. py:class:: PerlinNoise
+
+   Bases: :py:obj:`NoiseGenerator`
+
+   .. autoapi-inheritance-diagram:: ariel.utils.noise_gen.PerlinNoise
+      :parts: 1
+
+
+   Vectorized Perlin noise (2D) using NumPy only.
+
+   :param seed: Random seed for reproducibility.
+   :type seed: :class:`int | None`
+
+
+   .. py:attribute:: seed
+      :type:  int | None
+      :value: None
+
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: as_grid(width: int, height: int, *, scale: float = 64.0, normalize: bool = True) -> numpy.ndarray
+
+      Generate a (height, width) grid of Perlin noise.
+
+      :param width:
+      :type width: :class:`int`
+      :param height:
+      :type height: :class:`int`
+      :param scale: The number of pixels per noise unit. Larger -> smoother noise.
+      :type scale: :class:`float`
+      :param normalize: If True, map result from [-1, 1] to [0, 1].
+      :type normalize: :class:`bool`
+
+      :returns: Array of shape (height, width), dtype float32.
+      :rtype: :class:`np.ndarray`
+
+
+
+   .. py:method:: at_pixel_position(x: int, y: int, *, scale: float = 64.0, normalize: bool = True) -> float
+
+      Sample Perlin noise at a single pixel (x, y).
+
+      This is still vectorized internally and simply extracts the scalar.
+
+      :param x:
+      :type x: :class:`int`
+      :param y:
+      :type y: :class:`int`
+      :param scale:
+      :type scale: :class:`float`
+      :param normalize:
+      :type normalize: :class:`bool`
+
+      :rtype: :class:`float`
+
+
+
+.. py:data:: noise
+
